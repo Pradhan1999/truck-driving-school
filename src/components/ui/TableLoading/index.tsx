@@ -1,15 +1,18 @@
-import { TableCell } from '@mui/material';
-import { Skeleton } from '@mui/material';
-import { TableRow } from '@mui/material';
-import React from 'react';
+import { TableCell } from "@mui/material";
+import { Skeleton } from "@mui/material";
+import { TableRow } from "@mui/material";
 
-const TableLoading = ({ columns, viewPage }: { columns: any; viewPage: number }) => {
-  console.log('columns', columns);
-
+const TableLoading = ({
+  columns,
+  viewPage,
+}: {
+  columns: any;
+  viewPage: number;
+}) => {
   return (
     <TableRow>
       {columns?.map((_: any, index: number) => (
-        <TableCell key={index} sx={{ width: 'auto' }}>
+        <TableCell key={index} sx={{ width: "auto" }}>
           {[...Array(viewPage)].map((_, idx) => (
             <Skeleton key={idx} height={40} />
           ))}
