@@ -1,0 +1,29 @@
+{
+  "API Call": {
+  "prefix": "api",
+  "body": [
+    "const ${1:fetchUsers} = useCallback(() => {",
+    "    setLoading(true);",
+    "    ${2:serviceName}({",
+    "      query: { ${3:query} },",
+    "      pathParams: { ${4:pathParams} },",
+    "      body: { ${5:body} },",
+    "    })",
+    "      .then((res:any) => {",
+    "        //handle response here...",
+    "      })",
+    "      .catch((error:any) => {",
+    "        //handle error here...",
+    "       })",
+    "      .finally(() => {",
+    "        setLoading(false);",
+    "      });",
+    "  }, [${6:queryDependency}]);",
+    "",
+    "  useEffect(() => {",
+    "    ${1:fetchUsers}();",
+    "  }, [${1:fetchUsers}]);"
+  ],
+  "description": "API Call"
+}
+}
