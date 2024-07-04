@@ -34,7 +34,7 @@ import { openSnackbar } from 'api/snackbar';
 import LoadingButton from 'components/@extended/LoadingButton';
 import { useParams } from 'react-router';
 import AutocompleteInput from 'components/ui/Autocomplete';
-import countries from '../../../../utils/countries.json';
+import countries from '../../../utils/countries.json';
 import { trim } from 'lodash';
 import { programLevels } from 'pages/college/collegeDetail/addProgram/options';
 

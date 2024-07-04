@@ -1,43 +1,56 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import Fab from '@mui/material/Fab';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import Fab from "@mui/material/Fab";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 // project-imports
-import ThemeLayout from './ThemeLayout';
-import ThemeMode from './ThemeMode';
-import ThemeContrast from './ThemeContrast';
-import ColorScheme from './ColorScheme';
-import ThemeWidth from './ThemeWidth';
-import ThemeMenuLayout from './ThemeMenuLayout';
-import ThemeFont from './ThemeFont';
-import MenuCaption from './MenuCaption';
+import ThemeLayout from "./ThemeLayout";
+import ThemeMode from "./ThemeMode";
+import ThemeContrast from "./ThemeContrast";
+import ColorScheme from "./ColorScheme";
+import ThemeWidth from "./ThemeWidth";
+import ThemeMenuLayout from "./ThemeMenuLayout";
+import ThemeFont from "./ThemeFont";
+import MenuCaption from "./MenuCaption";
 
-import MainCard from 'components/MainCard';
-import IconButton from 'components/@extended/IconButton';
-import SimpleBar from 'components/third-party/SimpleBar';
+import MainCard from "components/MainCard";
+import IconButton from "components/@extended/IconButton";
+import SimpleBar from "components/third-party/SimpleBar";
 
-import { HEADER_HEIGHT } from 'config';
-import useConfig from 'hooks/useConfig';
+import { HEADER_HEIGHT } from "config";
+import useConfig from "hooks/useConfig";
 
 // assets
-import { Add, Setting2 } from 'iconsax-react';
+import { Add, Setting2 } from "iconsax-react";
 
 // ==============================|| HEADER CONTENT - CUSTOMIZATION ||============================== //
 
 export default function Customization() {
   const theme = useTheme();
-  const { container, mode, presetColor, miniDrawer, themeDirection, menuOrientation, menuCaption, themeContrast, fontFamily } = useConfig();
+  const {
+    container,
+    mode,
+    presetColor,
+    miniDrawer,
+    themeDirection,
+    menuOrientation,
+    menuCaption,
+    themeContrast,
+    fontFamily,
+  } = useConfig();
 
   // eslint-disable-next-line
-  const themeLayout = useMemo(() => <ThemeLayout />, [miniDrawer, themeDirection]);
+  const themeLayout = useMemo(
+    () => <ThemeLayout />,
+    [miniDrawer, themeDirection]
+  );
   // eslint-disable-next-line
   const themeMenuLayout = useMemo(() => <ThemeMenuLayout />, [menuOrientation]);
   // eslint-disable-next-line
@@ -67,60 +80,70 @@ export default function Customization() {
         variant="circular"
         sx={{
           borderRadius: 0,
-          borderTopLeftRadius: '50%',
-          borderBottomLeftRadius: '50%',
-          borderTopRightRadius: '4px',
-          borderBottomRightRadius: '4px',
-          top: '14%',
-          position: 'fixed',
+          borderTopLeftRadius: "50%",
+          borderBottomLeftRadius: "50%",
+          borderTopRightRadius: "4px",
+          borderBottomRightRadius: "4px",
+          top: "14%",
+          position: "fixed",
           right: 0,
           zIndex: 1200,
           boxShadow: theme.customShadows.z1,
-          bgcolor: 'background.paper',
-          border: '4px solid ',
-          borderColor: 'background.paper',
-          borderRight: 'none',
-          '&:hover': { bgcolor: 'primary.lighter' },
-          height: 48,
-          width: 48
+          bgcolor: "background.paper",
+          border: "4px solid ",
+          borderColor: "background.paper",
+          borderRight: "none",
+          "&:hover": { bgcolor: "primary.lighter" },
+          width: "46px",
+          height: "46px",
         }}
       >
         <IconButton
           onClick={handleToggle}
           aria-label="settings toggler"
-          size="medium"
-          sx={{ p: 0, '& :hover': { bgcolor: 'red' }, '& svg': { width: 28, height: 28 } }}
+          size="large"
+          sx={{
+            p: 0,
+            "& :hover": { bgcolor: "red" },
+            "& svg": { width: 28.5, height: 28.5 },
+          }}
         >
           <Setting2 variant="Bulk" />
         </IconButton>
       </Fab>
       <Drawer
         sx={{
-          zIndex: 2001
+          zIndex: 2001,
         }}
         anchor="right"
         onClose={handleToggle}
         open={open}
         PaperProps={{
           sx: {
-            width: 350
-          }
+            width: 350,
+          },
         }}
       >
         {open && (
           <MainCard content={false} border={false}>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1.5} sx={{ p: 2.5 }}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              spacing={1.5}
+              sx={{ p: 2.5 }}
+            >
               <Typography variant="h5">Settings</Typography>
               <IconButton color="error" sx={{ p: 0 }} onClick={handleToggle}>
-                <Add size={28} style={{ transform: 'rotate(45deg)' }} />
+                <Add size={28} style={{ transform: "rotate(45deg)" }} />
               </IconButton>
             </Stack>
             <SimpleBar
               sx={{
-                '& .simplebar-content': {
-                  display: 'flex',
-                  flexDirection: 'column'
-                }
+                "& .simplebar-content": {
+                  display: "flex",
+                  flexDirection: "column",
+                },
               }}
             >
               <Box sx={{ p: 3, height: `calc(100vh - ${HEADER_HEIGHT}px)` }}>

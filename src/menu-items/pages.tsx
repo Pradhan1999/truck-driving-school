@@ -2,17 +2,15 @@
 import { FormattedMessage } from "react-intl";
 
 // assets
-import { Teacher } from "iconsax-react";
+import { Profile2User, Teacher } from "iconsax-react";
 
 // type
 import { NavItemType } from "types/menu";
-// import Recruiter from "../../public/svg/recruiter";
-// import Student from "../../public/svg/student";
-// import Application from "../../public/svg/application";
 
 const icons = {
   maintenance: "",
-  student: Teacher,
+  student: Profile2User,
+  instructor: Teacher,
   // contactus: I24Support,
   // applications: Application,
   // college: Book,
@@ -28,16 +26,32 @@ const pages: NavItemType = {
   children: [
     {
       id: "Students",
-      title: <FormattedMessage id="Student" />,
+      title: <FormattedMessage id="Students" />,
       type: "item",
       url: "/student",
       icon: icons.student,
       children: [
         {
-          id: "add student",
-          title: <FormattedMessage id="Add Student" />,
+          id: "Add",
+          title: <FormattedMessage id="Add" />,
           type: "item",
-          url: "/student/addStudent",
+          url: "/student/add/personalInformation",
+          target: true,
+        },
+      ],
+    },
+    {
+      id: "Instructors",
+      title: <FormattedMessage id="Instructors" />,
+      type: "item",
+      url: "/instructor",
+      icon: icons.instructor,
+      children: [
+        {
+          id: "Add",
+          title: <FormattedMessage id="Add" />,
+          type: "item",
+          url: "/student/add/personalInformation",
           target: true,
         },
       ],

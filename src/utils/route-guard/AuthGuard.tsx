@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // project-imports
-import useAuth from 'hooks/useAuth';
+import useAuth from "hooks/useAuth";
 
 // types
-import { GuardProps } from 'types/auth';
+import { GuardProps } from "types/auth";
 
 // ==============================|| AUTH GUARD ||============================== //
 
@@ -14,15 +14,13 @@ export default function AuthGuard({ children }: GuardProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log('isLoggedIn: ', isLoggedIn);
-
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('login', {
+      navigate("login", {
         state: {
-          from: location.pathname
+          from: location.pathname,
         },
-        replace: true
+        replace: true,
       });
     }
   }, [isLoggedIn, navigate, location]);

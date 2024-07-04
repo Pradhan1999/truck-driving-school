@@ -27,7 +27,13 @@ export default function ThemeWidth() {
   };
 
   return (
-    <RadioGroup row aria-label="payment-card" name="payment-card" value={'container'} onChange={handleContainerChange}>
+    <RadioGroup
+      row
+      aria-label="payment-card"
+      name="payment-card"
+      value={container ? 'container' : 'fluid'}
+      onChange={handleContainerChange}
+    >
       <Stack direction="row" alignItems="center" spacing={2.5} sx={{ width: '100%' }}>
         <FormControlLabel
           control={<Radio value="fluid" sx={{ display: 'none' }} />}

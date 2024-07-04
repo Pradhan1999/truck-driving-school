@@ -1,33 +1,28 @@
 // @ts-nocheck
-import { useEffect, useState } from 'react';
-import Grid from '@mui/material/Grid';
-import PersonalInformation from 'components/student/addStudent/personalInformation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import EducationHistory from 'components/student/addStudent/educationHistory';
-import EmploymentHistory from 'components/student/addStudent/employementHistory';
-import EducationProficiency from 'components/student/addStudent/education';
-import OtherInformation from 'components/student/addStudent/otherInformation';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemButton from '@mui/material/ListItemButton';
-import MainCard from 'components/MainCard';
-import { CircleWithCheck } from 'assets/svg/circle';
-import { addStudent, getSingleStudent, updateStudent } from 'services/student';
-import { openSnackbar } from 'api/snackbar';
-import { SnackbarProps } from 'types/snackbar';
-import { InfoCircle } from 'iconsax-react';
-import { useLocation, useNavigate, useParams } from 'react-router';
-import countries from './../../../utils/countries.json';
-import { useTab } from '@mui/base';
+import { useEffect, useState } from "react";
+import Grid from "@mui/material/Grid";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemButton from "@mui/material/ListItemButton";
+import MainCard from "components/MainCard";
+import { CircleWithCheck } from "assets/svg/circle";
+import { addStudent, getSingleStudent, updateStudent } from "services/student";
+import { openSnackbar } from "api/snackbar";
+import { SnackbarProps } from "types/snackbar";
+import { InfoCircle } from "iconsax-react";
+import { useLocation, useNavigate, useParams } from "react-router";
+import countries from "../../utils/countries.json";
+import EducationHistory from "./educationHistory";
+import EmploymentHistory from "./employementHistory";
+import EducationProficiency from "./education";
+import OtherInformation from "./otherInformation";
+import PersonalInformation from "./personalInformation";
 
-const AddStudent = () => {
-  interface SelectedItemType {
-    status: boolean;
-    gender: boolean;
-  }
+const AddStudent2 = () => {
   const { student_id } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -36,21 +31,23 @@ const AddStudent = () => {
   const [updateId, setUpdateId] = useState();
   const [states, setStates] = useState<any>([]);
   const [cities, setCities] = useState<any>([]);
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   const [genderData, setGenderData] = useState({
-    isActive: '',
-    gender: ''
+    isActive: "",
+    gender: "",
   });
 
   const [martialData, setMartialData] = useState({
-    isActive: '',
-    martial: ''
+    isActive: "",
+    martial: "",
   });
 
-  const [selectedIndex, setSelectedIndex] = useState<any>(getPathIndex(pathname));
+  const [selectedIndex, setSelectedIndex] = useState<any>(
+    getPathIndex(pathname)
+  );
 
   const handleListItemClick = (index: number, route: string) => {
     setSelectedIndex(index);
@@ -60,11 +57,11 @@ const AddStudent = () => {
   function getPathIndex(pathname: string) {
     let selectedTab = 0;
     switch (pathname) {
-      case `/student/${student_id}/personalInformation`:
+      case `personal-information`:
         selectedTab = 0;
         break;
 
-      case `/student/${student_id}/educationHistory`:
+      case `address`:
         selectedTab = 1;
         break;
 
@@ -78,7 +75,7 @@ const AddStudent = () => {
       case `/student/${student_id}/otherInformation`:
         selectedTab = 4;
         break;
-      case '':
+      case "":
       default:
         selectedTab = 0;
     }
@@ -86,28 +83,36 @@ const AddStudent = () => {
   }
 
   const schema = z.object({
-    first_name: z.string().min(1, { message: 'Please enter first name' }),
-    last_name: z.string().min(1, { message: 'Please enter last name' }),
-    countryCitizenShip: z.string().min(1, 'Please select a countryCitizenShip.'),
-    passport_number: z.string().min(1, { message: 'Please enter passport number' }),
+    first_name: z.string().min(1, { message: "Please enter first name" }),
+    last_name: z.string().min(1, { message: "Please enter last name" }),
+    countryCitizenShip: z
+      .string()
+      .min(1, "Please select a countryCitizenShip."),
+    passport_number: z
+      .string()
+      .min(1, { message: "Please enter passport number" }),
     // country: z.string().min(1, { message: 'Please enter country' }),
-    dob: z.string()?.min(1, 'Please select dob'),
-    passport_exp: z.string().min(1, 'Please select passport expiry'),
-    email: z.string().min(1, { message: 'Please enter email' }),
-    phone: z.string().min(1, { message: 'Please enter phone ' }),
-    first_language: z.string().min(1, { message: 'Please enter first language' }),
-    marital_status: z.string().min(1, { message: 'Please select marital status' }),
-    zip: z.string().min(1, { message: 'Please enter zip code ' }),
-    address: z.string().min(1, { message: 'Please enter address' }),
+    dob: z.string()?.min(1, "Please select dob"),
+    passport_exp: z.string().min(1, "Please select passport expiry"),
+    email: z.string().min(1, { message: "Please enter email" }),
+    phone: z.string().min(1, { message: "Please enter phone " }),
+    first_language: z
+      .string()
+      .min(1, { message: "Please enter first language" }),
+    marital_status: z
+      .string()
+      .min(1, { message: "Please select marital status" }),
+    zip: z.string().min(1, { message: "Please enter zip code " }),
+    address: z.string().min(1, { message: "Please enter address" }),
     // state: z.string().min(2, { message: 'Please select state' }),
     // city: z.string().min(2, { message: 'Please select city' }),
-    gender: z.string().min(1, 'Please select gender'),
-    isd: z.string().min(1, 'Please enter country code')
+    gender: z.string().min(1, "Please select gender"),
+    isd: z.string().min(1, "Please enter country code"),
   });
 
   const defaultValues: any = {};
   for (const [key] of Object.entries(schema.shape)) {
-    defaultValues[key] = '';
+    defaultValues[key] = "";
   }
 
   const {
@@ -115,23 +120,31 @@ const AddStudent = () => {
     formState: { errors },
     handleSubmit,
     // reset,
-    setValue
+    setValue,
   } = useForm({
     defaultValues: defaultValues,
-    resolver: zodResolver(schema)
+    resolver: zodResolver(schema),
   });
 
   const onSubmit = (data: any) => {
     const items = {
       gender: genderData?.isActive ? genderData?.gender : data?.gender,
-      marital_status: martialData?.isActive ? martialData?.martial : data?.marital_status
+      marital_status: martialData?.isActive
+        ? martialData?.martial
+        : data?.marital_status,
     };
 
     setLoading(true);
     if (updateId) {
       updateStudent({
-        body: { ...data, country: selectedCountry, ...items, state: selectedState, city: selectedCity },
-        pathParams: { id: student_id }
+        body: {
+          ...data,
+          country: selectedCountry,
+          ...items,
+          state: selectedState,
+          city: selectedCity,
+        },
+        pathParams: { id: student_id },
       })
         ?.then((res) => {
           navigate(`/student/${res?.student?.id}`);
@@ -139,31 +152,39 @@ const AddStudent = () => {
           openSnackbar({
             open: true,
             message: res?.message,
-            variant: 'alert',
+            variant: "alert",
             alert: {
-              color: 'success'
-            }
+              color: "success",
+            },
           } as SnackbarProps);
         })
         .catch((err) => {
           setLoading(false);
           openSnackbar({
             open: true,
-            message: err?.data?.message || 'Something went wrong',
-            variant: 'alert',
+            message: err?.data?.message || "Something went wrong",
+            variant: "alert",
             alert: {
-              color: 'error',
-              icon: <InfoCircle />
+              color: "error",
+              icon: <InfoCircle />,
             },
-            transition: 'SlideDown',
+            transition: "SlideDown",
             anchorOrigin: {
-              vertical: 'top',
-              horizontal: 'right'
-            }
+              vertical: "top",
+              horizontal: "right",
+            },
           } as SnackbarProps);
         });
     } else {
-      addStudent({ body: { ...data, country: selectedCountry, ...items, state: selectedState, city: selectedCity } })
+      2({
+        body: {
+          ...data,
+          country: selectedCountry,
+          ...items,
+          state: selectedState,
+          city: selectedCity,
+        },
+      })
         ?.then((res) => {
           setUpdateId(res?.student?.id);
           navigate(`/student/${res?.student?.id}/personalInformation`);
@@ -171,55 +192,53 @@ const AddStudent = () => {
           openSnackbar({
             open: true,
             message: res?.message,
-            variant: 'alert',
+            variant: "alert",
             alert: {
-              color: 'success'
-            }
+              color: "success",
+            },
           } as SnackbarProps);
         })
         .catch((err) => {
           setLoading(false);
           openSnackbar({
             open: true,
-            message: err?.data?.message || 'Something went wrong',
-            variant: 'alert',
+            message: err?.data?.message || "Something went wrong",
+            variant: "alert",
             alert: {
-              color: 'error',
-              icon: <InfoCircle />
+              color: "error",
+              icon: <InfoCircle />,
             },
-            transition: 'SlideDown',
+            transition: "SlideDown",
             anchorOrigin: {
-              vertical: 'top',
-              horizontal: 'right'
-            }
+              vertical: "top",
+              horizontal: "right",
+            },
           } as SnackbarProps);
         });
     }
   };
 
-  // const handleListItemClick = (index: number) => {
-  //   setSelectedIndex(index);
-  // };
-
   useEffect(() => {
     if (student_id)
       getSingleStudent({
         pathParams: {
-          student_id
-        }
+          student_id,
+        },
       })?.then((res) => {
         setUpdateId(res?.id);
         Object.keys(res).map((key) => {
           setValue(key, res[key]);
         });
 
-        if (!['single', 'married', 'unMarried']?.includes(res?.marital_status)) {
-          setValue('marital_status', 'Others');
+        if (
+          !["single", "married", "unMarried"]?.includes(res?.marital_status)
+        ) {
+          setValue("marital_status", "Others");
           setMartialData({ martial: res?.marital_status, isActive: true });
         }
 
-        if (!['male', 'female']?.includes(res?.gender)) {
-          setValue('gender', 'Other');
+        if (!["male", "female"]?.includes(res?.gender)) {
+          setValue("gender", "Other");
           setGenderData({ gender: res?.gender, isActive: true });
         }
 
@@ -234,7 +253,7 @@ const AddStudent = () => {
   const countriesData = countries?.map((val: any) => {
     return {
       label: val?.name,
-      value: val?.name
+      value: val?.name,
     };
   });
   const handleFilterCities = (e: any) => {
@@ -244,10 +263,10 @@ const AddStudent = () => {
       ?.cities?.map((val: any) => {
         return {
           label: val?.name,
-          value: val?.name
+          value: val?.name,
         };
       });
-    setSelectedCity('');
+    setSelectedCity("");
     if (!citiesData?.[0]?.label) {
       setSelectedCity(e);
       setCities(() => [{ label: selectedState, value: selectedState }]);
@@ -264,38 +283,63 @@ const AddStudent = () => {
         return {
           label: val?.name,
           value: val?.name,
-          cities: val?.cities
+          cities: val?.cities,
         };
       });
-    setSelectedCity('');
-    setSelectedState('');
+    setSelectedCity("");
+    setSelectedState("");
     setStates(statesData);
   };
 
+  const sideTabsRoutes = [
+    {
+      value: "Personal Information",
+      route: `personal-information`,
+    },
+    {
+      value: "Education History",
+      route: `address`,
+    },
+    {
+      value: "Employment History",
+      route: `/student/${student_id}/employmentHistory`,
+    },
+    {
+      value: "Education Proficiency",
+      route: `/student/${student_id}/educationProficiency`,
+    },
+    {
+      value: "Other Information",
+      route: `/student/${student_id}/otherInformation`,
+    },
+  ];
+
   return (
     <div>
-      <Grid container spacing={3} px={4}>
+      <Grid container spacing={3}>
         <Grid item sm={3}>
-          <MainCard>
-            <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 10, color: 'secondary.main' } }} disablePadding={true}>
-              {[
-                {
-                  value: 'Personal Information',
-                  route: `${!student_id ? '/student/createStudent' : `/student/${student_id}/personalInformation`}`
+          <MainCard contentSX={{ p: 1.5 }}>
+            <List
+              component="nav"
+              sx={{
+                p: 0,
+                "& .MuiListItemIcon-root": {
+                  minWidth: 10,
+                  color: "secondary.main",
                 },
-                { value: 'Education History', route: `/student/${student_id}/educationHistory` },
-                { value: 'Employment History', route: `/student/${student_id}/employmentHistory` },
-                { value: 'Education Proficiency', route: `/student/${student_id}/educationProficiency` },
-                { value: 'Other Information', route: `/student/${student_id}/otherInformation` }
-              ].map((text, index) => (
+              }}
+              disablePadding={true}
+            >
+              {sideTabsRoutes.map((text, index) => (
                 <ListItemButton
-                  disabled={!student_id && index !== 0}
                   key={index}
                   selected={selectedIndex === index}
                   onClick={() => handleListItemClick(index, text?.route)}
                 >
                   <ListItemIcon sx={{ margin: 1 }}>
-                    <CircleWithCheck color={selectedIndex === index ? '#2A50ED' : 'gray'} />
+                    <CircleWithCheck
+                      color={selectedIndex === index ? "#2A50ED" : "gray"}
+                    />
                   </ListItemIcon>
                   <ListItemText primary={text?.value} />
                 </ListItemButton>
@@ -337,4 +381,4 @@ const AddStudent = () => {
   );
 };
 
-export default AddStudent;
+export default AddStudent2;

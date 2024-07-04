@@ -4,7 +4,7 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { DocumentCode2, Home, Home2 } from 'iconsax-react';
+import { Home } from 'iconsax-react';
 
 // type
 import { NavItemType } from 'types/menu';

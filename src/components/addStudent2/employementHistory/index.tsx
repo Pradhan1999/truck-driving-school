@@ -26,7 +26,7 @@ import { openSnackbar } from 'api/snackbar';
 import { SnackbarProps } from 'types/snackbar';
 import { useParams } from 'react-router';
 import AutocompleteInput from 'components/ui/Autocomplete';
-import countries from '../../../../utils/countries.json';
+import countries from '../../../utils/countries.json';
 
 interface Props {
   control: any;

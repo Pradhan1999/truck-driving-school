@@ -1,17 +1,18 @@
-import { useEffect, useState, ChangeEvent, MouseEvent } from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import FormLabel from '@mui/material/FormLabel';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import MainCard from 'components/MainCard';
-import Avatar from 'components/@extended/Avatar';
-import { ThemeMode } from 'config';
-import { Camera } from 'iconsax-react';
+import { useEffect, useState, ChangeEvent } from "react";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import FormLabel from "@mui/material/FormLabel";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import MainCard from "components/MainCard";
+import Avatar from "components/@extended/Avatar";
+import { ThemeMode } from "config";
+import { Camera } from "iconsax-react";
+import Page from "components/ui/PageLayout";
 
 interface TabItem {
   id: string;
@@ -21,7 +22,9 @@ interface TabItem {
 
 export default function ProfileTabs({ tabs }: { tabs: TabItem[] }) {
   const theme = useTheme();
-  const [selectedImage, setSelectedImage] = useState<File | undefined>(undefined);
+  const [selectedImage, setSelectedImage] = useState<File | undefined>(
+    undefined
+  );
   const [avatar, setAvatar] = useState<string | undefined>();
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export default function ProfileTabs({ tabs }: { tabs: TabItem[] }) {
 
   return (
     <>
-      <MainCard sx={{ height: 180 }}>
+      {/* <MainCard sx={{ height: 180 }}>
         <Grid container spacing={6}>
           <Grid item>
             <Stack direction="row" alignItems="center">
@@ -133,14 +136,16 @@ export default function ProfileTabs({ tabs }: { tabs: TabItem[] }) {
             />
           ))}
         </Tabs>
-      </MainCard>
-      <Stack marginTop={2}>
-        {tabs.map((tab, index) => (
-          <div key={tab.id} hidden={value !== index}>
-            {tab.content}
-          </div>
-        ))}
-      </Stack>
+      </MainCard> */}
+      <Page title="Add Student">
+        <Stack marginTop={2}>
+          {tabs.map((tab, index) => (
+            <div key={tab.id} hidden={value !== index}>
+              {tab.content}
+            </div>
+          ))}
+        </Stack>
+      </Page>
     </>
   );
 }
