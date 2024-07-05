@@ -6,7 +6,7 @@ import Page from "components/ui/PageLayout";
 import { LoadingButton } from "@mui/lab";
 import PersonalInformation from "./personalInformation";
 import Address from "./address";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import CourseDetails from "./courseDetails";
 
 const amountValidation = z
@@ -37,38 +37,37 @@ const schema = z.object({
     }),
   altContactNo: z
     .string()
-    .optional()
-    .refine(
-      (value) => {
-        if (!value) return true; // Pass validation if the field is empty
-        const digitsOnly = value.replace(/[^\d+]/g, "");
-        return (
-          digitsOnly.length >= 10 &&
-          /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/.test(value)
-        );
-      },
-      {
-        message:
-          "Invalid contact number format. Must have at least 10 digits if provided.",
-      }
-    ),
+    .min(1, "Contact number is required")
+    .regex(
+      /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
+      "Invalid contact number format"
+    )
+    .refine((value) => value.replace(/[^\d+]/g, "").length >= 10, {
+      message: "Contact number must have at least 10 digits",
+    })
+    .optional(),
   licenceNo: z.string().optional(),
+  sin: z.string().optional(),
   dob: z.string({
     required_error: "Date of birth is required",
   }),
   language: z.enum(["english", "hindi"]),
+  referredBy: z.enum(["", "pending", "approved", "rejected"]),
+  fundingStatus: z.enum(["", "pending", "approved", "rejected"]),
   // address
-  sameAddress: z.any(),
+  sameAddress: z.any().optional(),
   streetNo: z.string().min(1, "Street Number is required"),
   streetName: z.string().min(1, "Street Name is required"),
   city: z.string().min(1, "City is required"),
-  postalCode: z.string().min(1, "Postal Code is required"),
-  mailStreetNo: z.string().min(1, "Street Number is required"),
-  mailStreetName: z.string().min(1, "Street Name is required"),
-  mailCity: z.string().min(1, "City is required"),
-  mailPostalCode: z.string().min(1, "Postal Code is required"),
-  mailProvince: z.enum(["", "pending", "approved", "rejected"]),
   province: z.enum(["", "pending", "approved", "rejected"]),
+  postalCode: z.string().min(1, "Postal Code is required"),
+
+  mailStreetNo: z.string().min(1, "Street Number is required").optional(),
+  mailStreetName: z.string().min(1, "Street Name is required").optional(),
+  mailCity: z.string().min(1, "City is required").optional(),
+  mailPostalCode: z.string().min(1, "Postal Code is required").optional(),
+  mailProvince: z.enum(["", "pending", "approved", "rejected"]).optional(),
+
   // course
   campus: z.string().min(1, "Campus is required"),
   enrollDate: z.string({
@@ -118,15 +117,34 @@ const AddStudent = () => {
     defaultValues: {
       firstName: "",
       sameAddress: false,
-      mailStreetNo: "",
-      mailStreetName: "",
+      language: "english",
       mailProvince: "",
+      referredBy: "",
+      fundingStatus: "",
     },
   });
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Handle form submission
+    const payload = { ...data };
+    console.log("payload", payload);
+
+    // const allStudent = useCallback(() => {
+    //   // setLoading(true);
+    //   serviceName({
+    //     query: { query },
+    //     pathParams: { pathParams },
+    //     body: { body },
+    //   })
+    //     .then((res: any) => {
+    //       //handle response here...
+    //     })
+    //     .catch((error: any) => {
+    //       //handle error here...
+    //     })
+    //     .finally(() => {
+    //       setLoading(false);
+    //     });
+    // }, [queryDependency]);
   };
 
   const sameAddress = watch("sameAddress");

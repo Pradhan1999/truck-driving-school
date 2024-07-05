@@ -163,7 +163,7 @@ const Address = ({ control, errors }: any) => {
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <ControlledField
-                name="postalCode"
+                name="mailPostalCode"
                 label="Postal Code"
                 errors={errors}
                 control={control}

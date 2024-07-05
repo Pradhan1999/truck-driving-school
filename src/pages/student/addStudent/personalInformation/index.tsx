@@ -174,12 +174,7 @@ const PersonalInformation = ({ control, errors }: any) => {
               render={({ field }) => (
                 <FormControl fullWidth>
                   <FormLabel>Language of Instruction</FormLabel>
-                  <Select
-                    {...field}
-                    size="small"
-                    sx={{ mt: 1 }}
-                    defaultValue="english"
-                  >
+                  <Select {...field} size="small" sx={{ mt: 1 }}>
                     <MenuItem value="english">English</MenuItem>
                     <MenuItem value="hindi">Hindi</MenuItem>
                   </Select>
