@@ -25,7 +25,8 @@ import Notification from "pages/profile/notification";
 import AddStudent from "pages/student/addStudent";
 import Instructor from "pages/instructor";
 import AddInstructor from "pages/instructor/addInstructor";
-import Batch from "pages/Batch";
+import Batch from "pages/batch";
+import Attendance from "pages/attendance";
 
 const MaintenanceError = Loadable(
   lazy(() => import("pages/maintenance/error/404"))
@@ -102,6 +103,16 @@ const MainRoutes = {
         {
           path: "batch/add",
           element: <AddInstructor />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <DashboardLayout />,
+      children: [
+        {
+          path: "attendance",
+          element: <Attendance />,
         },
       ],
     },
