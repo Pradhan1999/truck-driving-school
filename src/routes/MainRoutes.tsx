@@ -25,7 +25,7 @@ import Notification from "pages/profile/notification";
 import AddStudent from "pages/student/addStudent";
 import Instructor from "pages/instructor";
 import AddInstructor from "pages/instructor/addInstructor";
-import Batch from "pages/batch";
+import Batch from "pages/batches";
 import Attendance from "pages/attendance";
 
 const MaintenanceError = Loadable(
