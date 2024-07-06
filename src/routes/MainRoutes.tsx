@@ -23,6 +23,8 @@ import ProfileInformation from "pages/profile/profileDetail";
 import SchoolCommission from "pages/profile/schoolCommission";
 import Notification from "pages/profile/notification";
 import AddStudent from "pages/student/addStudent";
+import Instructor from "pages/instructor";
+import AddInstructor from "pages/instructor/addInstructor";
 
 const MaintenanceError = Loadable(
   lazy(() => import("pages/maintenance/error/404"))
@@ -57,29 +59,70 @@ const MainRoutes = {
           element: <Student />,
         },
         {
+          path: "student/:id",
+          element: <Student />,
+        },
+        {
           path: "student/add",
           element: <AddStudent />,
         },
-        // {
-        //   path: "student/add",
-        //   element: <AddStudent />,
+      ],
+    },
+    {
+      path: "/",
+      element: <DashboardLayout />,
+      children: [
+        {
+          path: "instructor",
+          element: <Instructor />,
+        },
+        {
+          path: "instructor/:id",
+          element: <Student />,
+        },
+        {
+          path: "instructor/add",
+          element: <AddInstructor />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <DashboardLayout />,
+      children: [
+        {
+          path: "profile",
+          element: <Profile />,
+          children: [
+            {
+              path: "detail",
+              element: <ProfileInformation />,
+            },
 
-        //   children: [
-        //     {
-        //       path: "personal-information",
-        //       element: <PersonalInformation />,
-        //     },
+            {
+              path: "changePassword",
+              element: <ChangePassword />,
+            },
+            {
+              path: "manageStaff",
+              element: <ManageStaff />,
+            },
 
-        //     {
-        //       path: "address",
-        //       element: <EducationHistory />,
-        //     },
-        //     {
-        //       path: "course-details",
-        //       element: <EmploymentHistory />,
-        //     },
-        //   ],
-        // },
+            {
+              path: "roleManager",
+              element: <RoleManager />,
+            },
+            {
+              path: "schoolCommission",
+              element: <SchoolCommission />,
+            },
+
+            {
+              path: "notification",
+              element: <Notification />,
+            },
+          ],
+        },
       ],
     },
     {
@@ -137,45 +180,6 @@ const MainRoutes = {
         {
           path: "manageRecruiters/profile",
           element: <RecruiterProfile />,
-        },
-      ],
-    },
-    {
-      path: "/",
-      element: <DashboardLayout />,
-      children: [
-        {
-          path: "profile",
-          element: <Profile />,
-          children: [
-            {
-              path: "detail",
-              element: <ProfileInformation />,
-            },
-
-            {
-              path: "changePassword",
-              element: <ChangePassword />,
-            },
-            {
-              path: "manageStaff",
-              element: <ManageStaff />,
-            },
-
-            {
-              path: "roleManager",
-              element: <RoleManager />,
-            },
-            {
-              path: "schoolCommission",
-              element: <SchoolCommission />,
-            },
-
-            {
-              path: "notification",
-              element: <Notification />,
-            },
-          ],
         },
       ],
     },

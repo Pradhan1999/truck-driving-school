@@ -6,20 +6,20 @@ import { Add, Filter } from "iconsax-react";
 
 import Page from "components/ui/PageLayout";
 import ThemeButton from "components/ui/Button";
-import StudentTable from "./studentTable";
+import InstructorTable from "./instructorTable";
 
-const Student = () => {
+const Instructor = () => {
   const [drawer, setDrawer] = useState(false);
 
   return (
     <div>
       <Page
-        title="Students"
+        title="Instructors"
         primaryAction={
           <Stack direction="row" spacing={1}>
-            <Link to="/student/add">
+            <Link to="/instructor/add">
               <ThemeButton variant="contained" startIcon={<Add />}>
-                Add Student
+                Add Instructor
               </ThemeButton>
             </Link>
             <ThemeButton
@@ -34,10 +34,10 @@ const Student = () => {
           </Stack>
         }
       >
-        <StudentTable drawer={drawer} setDrawer={setDrawer} />
+        <InstructorTable drawer={drawer} setDrawer={setDrawer} />
       </Page>
     </div>
   );
 };
 
-export default Student;
+export default Instructor;

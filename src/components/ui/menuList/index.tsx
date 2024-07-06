@@ -1,9 +1,9 @@
-import { Menu } from '@mui/material';
-import { Typography } from '@mui/material';
-import { MenuItem, Button } from '@mui/material';
-import MoreIcon from 'components/@extended/MoreIcon';
+import { Menu, Stack } from "@mui/material";
+import { Typography } from "@mui/material";
+import { MenuItem, Button } from "@mui/material";
+import MoreIcon from "components/@extended/MoreIcon";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const MenuList = ({ option, ...props }: any) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -13,7 +13,7 @@ const MenuList = ({ option, ...props }: any) => {
   };
 
   const handleMenuClose = (content: () => void) => {
-    if (typeof content === 'function') {
+    if (typeof content === "function") {
       content();
       setAnchorEl(null);
     }
@@ -21,17 +21,17 @@ const MenuList = ({ option, ...props }: any) => {
     setAnchorEl(null);
   };
   return (
-    <div style={{ display: 'flex', justifyItems: 'center' }}>
+    <div style={{ display: "flex", justifyItems: "center" }}>
       <Button color="secondary" onClick={handleMenuOpen}>
         <MoreIcon />
       </Button>
-      <div style={{ position: 'absolute' }}>
+      <div style={{ position: "absolute" }}>
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={() => setAnchorEl(null)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          transformOrigin={{ vertical: "top", horizontal: "left" }}
           onClick={props.onClick}
         >
           {option?.map((ele: any) => (
@@ -40,10 +40,14 @@ const MenuList = ({ option, ...props }: any) => {
                 handleMenuClose(ele?.content);
               }}
             >
-              <div style={{ display: 'flex', justifyItems: 'center', gap: 10, color: ele?.color, width: '100%' }}>
-                <div>{ele?.icon}</div>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Stack textAlign="center">
+                  {ele?.icon}
+                </Stack>
                 <Typography>{ele?.value}</Typography>
-              </div>
+              </Stack>
+              {/* <div>{ele?.icon}</div>
+                <Typography>{ele?.value}</Typography> */}
             </MenuItem>
           ))}
         </Menu>

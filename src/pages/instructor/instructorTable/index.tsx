@@ -34,7 +34,7 @@ import MenuList from "components/ui/menuList";
 import { useNavigate } from "react-router";
 import { TbEdit, TbEye } from "react-icons/tb";
 
-const StudentTable = ({ drawer, setDrawer }: any) => {
+const InstructorTable = ({ drawer, setDrawer }: any) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [value, setValue] = useState("Columns");
@@ -360,4 +360,4 @@ const StudentTable = ({ drawer, setDrawer }: any) => {
   );
 };
 
-export default StudentTable;
+export default InstructorTable;

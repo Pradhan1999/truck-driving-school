@@ -1,31 +1,18 @@
 import {
   Button,
   FormControl,
-  FormControlLabel,
-  FormHelperText,
   FormLabel,
   Grid,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
   Stack,
   Typography,
 } from "@mui/material";
 import MainCard from "components/MainCard";
 import Date from "components/ui/Date";
 import ControlledField from "components/ui/ControlledField";
-import { Controller } from "react-hook-form";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useRef, useState } from "react";
 
 const PersonalInformation = ({ control, errors }: any) => {
-  const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
-  ];
-
   const [profilePicture, setProfilePicture] = useState<any>(null);
   const fileInputRef = useRef<any>(null);
 
@@ -43,29 +30,13 @@ const PersonalInformation = ({ control, errors }: any) => {
     }
   };
   return (
-    <MainCard content={false} title="Personal Information">
+    <MainCard content={false} title="Personal Information" sx={{ mt: 3 }}>
       <Stack padding={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4}>
             <ControlledField
-              name="firstName"
-              label="First Name"
-              errors={errors}
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <ControlledField
-              name="middleName"
-              label="Middle Name"
-              errors={errors}
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <ControlledField
-              name="lastName"
-              label="Last Name"
+              name="contactNumber"
+              label="Contact Number"
               errors={errors}
               control={control}
             />
@@ -79,136 +50,96 @@ const PersonalInformation = ({ control, errors }: any) => {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Controller
-              name="gender"
-              control={control}
-              render={({ field }) => (
-                <FormControl>
-                  <FormLabel>Gender</FormLabel>
-                  <RadioGroup {...field} row sx={{ pt: 1, pl: 1 }}>
-                    {genderOptions.map((option) => (
-                      <FormControlLabel
-                        key={option.value}
-                        value={option.value}
-                        control={<Radio />}
-                        label={option.label}
-                      />
-                    ))}
-                  </RadioGroup>
-                  <FormHelperText error={!!errors["gender"]}>
-                    {errors["gender"]?.message}
-                  </FormHelperText>
-                </FormControl>
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
             <ControlledField
-              name="userName"
-              label="Username"
+              name="streetNo"
+              label="Street Number"
               errors={errors}
               control={control}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <ControlledField
-              name="contactNo"
-              label="Contact Number"
+              name="streetName"
+              label="Street Name"
               errors={errors}
               control={control}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <ControlledField
-              name="altContactNo"
-              label="Alternative Contact Number"
+              name="city"
+              label="City"
               errors={errors}
               control={control}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <ControlledField
-              name="licenceNo"
-              label="Licence/ID Number"
+              name="province"
+              label="Province"
+              errors={errors}
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <ControlledField
+              name="postalCode"
+              label="Postal Code"
+              errors={errors}
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <ControlledField
+              name="educationalQualification"
+              label="Educational Qualification"
               errors={errors}
               control={control}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Date
-              label="Date of Birth"
-              name="dob"
+              label="Employment Date"
+              name="employmentDate"
               control={control}
               error={errors}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <ControlledField
-              name="sin"
-              label="S.I.N"
-              errors={errors}
+            <Date
+              label="Unavailable From"
+              name="unavailableFrom"
               control={control}
+              error={errors}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Controller
-              name="fundingStatus"
+            <Date
+              label="Unavailable To"
+              name="unavailableTo"
               control={control}
-              render={({ field }) => (
-                <FormControl fullWidth>
-                  <FormLabel>Funding Status</FormLabel>
-                  <Select {...field} size="small" sx={{ mt: 1 }}>
-                    <MenuItem value="pending">Pending</MenuItem>
-                    <MenuItem value="approved">Approved</MenuItem>
-                    <MenuItem value="rejected">Rejected</MenuItem>
-                  </Select>
-                  <FormHelperText error={!!errors["fundingStatus"]}>
-                    {errors["fundingStatus"]?.message}
-                  </FormHelperText>
-                </FormControl>
-              )}
+              error={errors}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Controller
-              name="referredBy"
+            <Date
+              label="Medical Due Date (if applicable)"
+              name="medicalDue"
               control={control}
-              render={({ field }) => (
-                <FormControl fullWidth>
-                  <FormLabel>Referred By</FormLabel>
-                  <Select {...field} size="small" sx={{ mt: 1 }}>
-                    <MenuItem value="pending">Pending</MenuItem>
-                    <MenuItem value="approved">Approved</MenuItem>
-                    <MenuItem value="rejected">Rejected</MenuItem>
-                  </Select>
-                  <FormHelperText error={!!errors["fundingStatus"]}>
-                    {errors["fundingStatus"]?.message}
-                  </FormHelperText>
-                </FormControl>
-              )}
+              error={errors}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Controller
-              name="language"
+            <Date
+              label="Criminal Record (if applicable)"
+              name="criminalRecord"
               control={control}
-              render={({ field }) => (
-                <FormControl fullWidth>
-                  <FormLabel>Language of Instruction</FormLabel>
-                  <Select {...field} size="small" sx={{ mt: 1 }}>
-                    <MenuItem value="english">English</MenuItem>
-                    <MenuItem value="hindi">Hindi</MenuItem>
-                  </Select>
-                  <FormHelperText error={!!errors["fundingStatus"]}>
-                    {errors["fundingStatus"]?.message}
-                  </FormHelperText>
-                </FormControl>
-              )}
+              error={errors}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <FormControl fullWidth>
-              <FormLabel>Student Profile Picture</FormLabel>
+              <FormLabel>Instructor Profile Picture</FormLabel>
               <input
                 ref={fileInputRef}
                 accept="image/*"
