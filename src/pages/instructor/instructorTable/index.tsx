@@ -62,16 +62,6 @@ const InstructorTable = ({ drawer, setDrawer }: any) => {
     },
   ];
   const columns = [
-    {
-      header: "Student ID",
-      accessorKey: "id",
-      minSize: 60,
-      cell: ({ cell }: any) => (
-        <Typography variant="inherit" color="primary">
-          {cell?.row?.original?.id}
-        </Typography>
-      ),
-    },
     // {
     //   header: "Student Email",
     //   accessorKey: "email",
@@ -127,13 +117,6 @@ const InstructorTable = ({ drawer, setDrawer }: any) => {
       minSize: 80,
       cell: (cell: any) => cell?.row?.original?.date || "-",
     },
-
-    // {
-    //   header: "Stage",
-    //   accessorKey: "stage",
-    //   minSize: 60,
-    //   cell: (cell: any) => cell?.row?.original?.stage || "N/A",
-    // },
     {
       header: "Action",
       accessorKey: "action",

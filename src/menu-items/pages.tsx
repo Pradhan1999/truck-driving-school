@@ -2,7 +2,7 @@
 import { FormattedMessage } from "react-intl";
 
 // assets
-import { Profile2User, Teacher } from "iconsax-react";
+import { Category, Profile2User, Teacher } from "iconsax-react";
 
 // type
 import { NavItemType } from "types/menu";
@@ -11,6 +11,7 @@ const icons = {
   maintenance: "",
   student: Profile2User,
   instructor: Teacher,
+  batch: Category,
   // contactus: I24Support,
   // applications: Application,
   // college: Book,
@@ -52,6 +53,22 @@ const pages: NavItemType = {
           title: <FormattedMessage id="Add" />,
           type: "item",
           url: "/instructor/add",
+          target: true,
+        },
+      ],
+    },
+    {
+      id: "Batch",
+      title: <FormattedMessage id="Batch" />,
+      type: "item",
+      url: "/batch",
+      icon: icons.batch,
+      children: [
+        {
+          id: "Add",
+          title: <FormattedMessage id="Add" />,
+          type: "item",
+          url: "/batch/add",
           target: true,
         },
       ],

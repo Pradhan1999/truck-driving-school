@@ -4,16 +4,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Page from "components/ui/PageLayout";
 import { LoadingButton } from "@mui/lab";
-import { useEffect } from "react";
-import OtherDetails from "./courseDetails";
+import OtherDetails from "./otherDetails";
 import PersonalInformation from "./personalInformation";
-
-const amountValidation = z
-  .string()
-  .regex(/^\d+(\.\d{1,2})?$/, "Please enter a valid amount")
-  .transform((val) => parseFloat(val))
-  .refine((val) => val >= 0, "Amount cannot be negative")
-  .optional();
 
 const schema = z.object({
   campus: z.string().optional(),
