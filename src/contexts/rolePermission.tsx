@@ -17,9 +17,9 @@ const RoleProvider = ({ children }: any) => {
   const [error, setError] = useState(null);
 
   const FetchRoles = () => {
-    fetchAllRoles({})?.then((res) => {
-      setRoles(res?.rows);
-    });
+    // fetchAllRoles({})?.then((res) => {
+    //   setRoles(res?.rows);
+    // });
   };
 
   useEffect(() => {

@@ -140,7 +140,7 @@ const IconButtonStyle = styled(MuiIconButton, { shouldForwardProp: (prop) => pro
     }),
     ...(variant !== 'text' && {
       '&.Mui-disabled': {
-        backgroundColor: theme.palette.secondary[200]
+        backgroundColor: theme.palette.secondary[500]
       }
     }),
     ...getColorStyle({ variant, theme, color })

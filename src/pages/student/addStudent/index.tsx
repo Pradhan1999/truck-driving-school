@@ -1,13 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, InputLabel, Stack, TextField } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Box, Stack } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Page from "components/ui/PageLayout";
-import { LoadingButton } from "@mui/lab";
 import PersonalInformation from "./personalInformation";
 import Address from "./address";
-import { useCallback, useEffect } from "react";
+import { useEffect, useState } from "react";
 import CourseDetails from "./courseDetails";
+import { addStudent } from "services/student";
+import ActionButton from "components/ui/ActionButton";
+import { useNavigate } from "react-router";
 
 const amountValidation = z
   .string()
@@ -106,12 +108,15 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const AddStudent = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const {
     watch,
     control,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -125,26 +130,29 @@ const AddStudent = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    const payload = { ...data };
-    console.log("payload", payload);
+    const { sameAddress, ...restData } = data;
 
-    // const allStudent = useCallback(() => {
-    //   // setLoading(true);
-    //   serviceName({
-    //     query: { query },
-    //     pathParams: { pathParams },
-    //     body: { body },
-    //   })
-    //     .then((res: any) => {
-    //       //handle response here...
-    //     })
-    //     .catch((error: any) => {
-    //       //handle error here...
-    //     })
-    //     .finally(() => {
-    //       setLoading(false);
-    //     });
-    // }, [queryDependency]);
+    setLoading(true);
+    const body = {
+      ...restData,
+      internationalStudent: data?.internationalStudent === "yes" ? true : false,
+    };
+
+    addStudent({
+      body,
+    })
+      .then((res: any) => {
+        console.log("res", res);
+        navigate("/student");
+        //handle response here...
+      })
+      .catch((error: any) => {
+        console.log("error", error);
+        //handle error here...
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const sameAddress = watch("sameAddress");
@@ -176,7 +184,8 @@ const AddStudent = () => {
 
           {/* SUBMIT BUTTON */}
           <Stack direction="row" justifyContent="flex-end" mt={4}>
-            <LoadingButton
+            <ActionButton text="Add" sx={{ px: 5 }} loading={loading} />
+            {/* <LoadingButton
               loading={isSubmitting}
               variant="contained"
               color="primary"
@@ -184,7 +193,7 @@ const AddStudent = () => {
               size="large"
             >
               Save and Continue
-            </LoadingButton>
+            </LoadingButton> */}
           </Stack>
         </form>
       </Box>
