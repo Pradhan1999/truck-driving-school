@@ -33,6 +33,7 @@ import { getAllStudent } from "services/student";
 import MenuList from "components/ui/menuList";
 import { useNavigate } from "react-router";
 import { TbEdit, TbEye } from "react-icons/tb";
+import { getAllInstructor } from "services/instructor";
 
 const InstructorTable = ({ drawer, setDrawer }: any) => {
   const theme = useTheme();
@@ -187,9 +188,9 @@ const InstructorTable = ({ drawer, setDrawer }: any) => {
     },
   ];
 
-  const fetchAllStudent = useCallback(() => {
+  const fetchAllInstructors = useCallback(() => {
     setLoading(true);
-    getAllStudent({
+    getAllInstructor({
       query: { limit: viewPage, start: startIndex, search: "" },
     })
       .then((res) => {
@@ -201,8 +202,8 @@ const InstructorTable = ({ drawer, setDrawer }: any) => {
   }, [viewPage, startIndex]);
 
   useEffect(() => {
-    fetchAllStudent();
-  }, [fetchAllStudent]);
+    fetchAllInstructors();
+  }, [fetchAllInstructors]);
 
   return (
     <div>

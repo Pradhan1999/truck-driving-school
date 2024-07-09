@@ -1,9 +1,9 @@
 import defaults from "./defaults";
 
-const prefix = "/students";
+const prefix = "/instructor";
 
-const student = {
-  addStudent: {
+const instructor = {
+  addInstructor: {
     v1: {
       ...defaults.methods.POST,
       ...defaults.versions.v1,
@@ -11,7 +11,7 @@ const student = {
     },
   },
 
-  getAllStudent: {
+  getAllInstructor: {
     v1: {
       ...defaults.methods.GET,
       ...defaults.versions.v1,
@@ -19,14 +19,14 @@ const student = {
     },
   },
 
-  getSingleStudent: {
+  getSingleInstructor: {
     v1: {
       ...defaults.methods.GET,
       ...defaults.versions.v1,
       uri: prefix + "/:id",
     },
   },
-  updateStudent: {
+  updateInstructor: {
     v1: {
       ...defaults.methods.PUT,
       ...defaults.versions.v1,
@@ -35,4 +35,4 @@ const student = {
   },
 };
 
-export default student;
+export default instructor;

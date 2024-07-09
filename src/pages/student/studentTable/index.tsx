@@ -33,6 +33,7 @@ import { getAllStudent } from "services/student";
 import MenuList from "components/ui/menuList";
 import { useNavigate } from "react-router";
 import { TbEdit, TbEye } from "react-icons/tb";
+import dayjs from "dayjs";
 
 const StudentTable = ({ drawer, setDrawer }: any) => {
   const theme = useTheme();
@@ -92,15 +93,17 @@ const StudentTable = ({ drawer, setDrawer }: any) => {
       minSize: 120,
       cell: ({ cell }: any) => (
         <Typography variant="inherit">
-          {`${cell?.row?.original?.first_name} ${cell?.row?.original?.last_name}`}
+          {cell?.row?.original?.firstName
+            ? `${cell?.row?.original?.firstName} ${cell?.row?.original?.lastName}`
+            : "-"}
         </Typography>
       ),
     },
     {
       header: "Phone No",
-      accessorKey: "phone",
+      accessorKey: "contactNo",
       minSize: 80,
-      cell: (cell: any) => cell?.row?.original?.phone || "-",
+      cell: (cell: any) => cell?.row?.original?.contactNo || "-",
     },
     {
       header: "Campus",
@@ -110,9 +113,9 @@ const StudentTable = ({ drawer, setDrawer }: any) => {
     },
     {
       header: "Course",
-      accessorKey: "education",
+      accessorKey: "courseName",
       minSize: 100,
-      cell: (cell: any) => cell?.row?.original?.education || "-",
+      cell: (cell: any) => cell?.row?.original?.courseName || "-",
     },
     {
       header: "Status",
@@ -123,17 +126,11 @@ const StudentTable = ({ drawer, setDrawer }: any) => {
     },
     {
       header: "Enrollment Date",
-      accessorKey: "date",
+      accessorKey: "enrollDate",
       minSize: 80,
-      cell: (cell: any) => cell?.row?.original?.date || "-",
+      cell: (cell: any) =>
+        dayjs(cell?.row?.original?.enrollDate).format("YYYY-MM-DD") || "-",
     },
-
-    // {
-    //   header: "Stage",
-    //   accessorKey: "stage",
-    //   minSize: 60,
-    //   cell: (cell: any) => cell?.row?.original?.stage || "N/A",
-    // },
     {
       header: "Action",
       accessorKey: "action",

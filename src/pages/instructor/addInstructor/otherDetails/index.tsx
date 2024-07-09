@@ -44,22 +44,6 @@ const OtherDetails = ({ control, errors }: any) => {
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <ControlledField
-                name="instructorName"
-                label="Instructor Name"
-                errors={errors}
-                control={control}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Date
-                label="Date of Birth"
-                name="dob"
-                control={control}
-                error={errors}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <ControlledField
                 name="licNo"
                 label="Licence/Certification Number"
                 errors={errors}

@@ -35,7 +35,23 @@ const PersonalInformation = ({ control, errors }: any) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4}>
             <ControlledField
-              name="contactNumber"
+              name="first_name"
+              label="First Name"
+              errors={errors}
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <ControlledField
+              name="last_name"
+              label="Last Name"
+              errors={errors}
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <ControlledField
+              name="phone"
               label="Contact Number"
               errors={errors}
               control={control}
@@ -47,6 +63,14 @@ const PersonalInformation = ({ control, errors }: any) => {
               label="Email"
               errors={errors}
               control={control}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Date
+              label="Date of Birth"
+              name="dob"
+              control={control}
+              error={errors}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
