@@ -18,6 +18,7 @@ export async function getAllStudent({ query }: any) {
 }
 
 export async function getSingleStudent({ pathParams }: any) {
+  console.log("pathParams", pathParams);
   return callApi({
     uriEndPoint: { ...student.getSingleStudent.v1 } as ApiEndpoint,
     pathParams,

@@ -56,7 +56,7 @@ const config: DefaultConfigProps = {
   i18n: 'en',
   menuOrientation: MenuOrientation.VERTICAL,
   menuCaption: true,
-  miniDrawer: true,
+  miniDrawer: false,
   container: true,
   mode: ThemeMode.LIGHT,
   presetColor: 'default',

@@ -27,6 +27,7 @@ import Instructor from "pages/instructor";
 import AddInstructor from "pages/instructor/addInstructor";
 import Batch from "pages/batches";
 import Attendance from "pages/attendance";
+import ViewStudent from "pages/student/viewStudent";
 
 const MaintenanceError = Loadable(
   lazy(() => import("pages/maintenance/error/404"))
@@ -62,7 +63,7 @@ const MainRoutes = {
         },
         {
           path: "student/:id",
-          element: <Student />,
+          element: <ViewStudent />,
         },
         {
           path: "student/add",
