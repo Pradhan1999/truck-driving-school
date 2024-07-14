@@ -6,7 +6,7 @@ import Page from "components/ui/PageLayout";
 import { LoadingButton } from "@mui/lab";
 import OtherDetails from "./otherDetails";
 import PersonalInformation from "./personalInformation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addInstructor } from "services/instructor";
 import { useNavigate } from "react-router";
 import { enqueueSnackbar } from "notistack";
@@ -112,6 +112,21 @@ const AddInstructor = () => {
         //handle error here...
       });
   };
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const firstErrorField: any = document.querySelector(
+        `[name="${Object.keys(errors)[0]}"]`
+      );
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }
+    }
+  }, [errors]);
 
   return (
     <Page title="Add Instructor">

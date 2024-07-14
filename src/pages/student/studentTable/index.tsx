@@ -129,7 +129,9 @@ const StudentTable = ({ drawer, setDrawer }: any) => {
       accessorKey: "enrollDate",
       minSize: 80,
       cell: (cell: any) =>
-        dayjs(cell?.row?.original?.enrollDate).format("YYYY-MM-DD") || "-",
+        (cell?.row?.original?.enrollDate &&
+          dayjs(cell?.row?.original?.enrollDate).format("YYYY-MM-DD")) ||
+        "-",
     },
     {
       header: "Action",

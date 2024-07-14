@@ -7,6 +7,7 @@ interface IProps {
   sx?: SxProps;
   variant?: OverridableStringUnion<"text" | "outlined" | "contained">;
   size?: OverridableStringUnion<"small" | "medium" | "large">;
+  disabled?: any;
   props?: any;
 }
 
@@ -16,6 +17,7 @@ const ActionButton = ({
   size,
   variant = "contained",
   loading,
+  disabled,
   ...props
 }: IProps) => {
   const getLoadingText = (originalText: any) => {
@@ -37,7 +39,7 @@ const ActionButton = ({
       sx={sx}
       size={size}
       variant={variant}
-      disabled={loading}
+      disabled={loading || disabled}
       startIcon={loading && <CircularProgress size={20} color="inherit" />}
       {...props}
     >

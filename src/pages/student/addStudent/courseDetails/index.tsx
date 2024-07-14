@@ -8,7 +8,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { typography } from "@mui/system";
 import MainCard from "components/MainCard";
 import ControlledField from "components/ui/ControlledField";
 import Date from "components/ui/Date";

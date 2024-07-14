@@ -129,6 +129,8 @@ const AddStudent = () => {
     },
   });
 
+  console.log("errors", errors);
+
   const onSubmit = (data: FormData) => {
     const { sameAddress, ...restData } = data;
 
@@ -172,6 +174,21 @@ const AddStudent = () => {
     }
   }, [city, postalCode, province, sameAddress, setValue, streetName, streetNo]);
 
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const firstErrorField: any = document.querySelector(
+        `[name="${Object.keys(errors)[0]}"]`
+      );
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }
+    }
+  }, [errors]);
+
   return (
     <Page title="Add Student">
       <Box>
@@ -185,15 +202,6 @@ const AddStudent = () => {
           {/* SUBMIT BUTTON */}
           <Stack direction="row" justifyContent="flex-end" mt={4}>
             <ActionButton text="Add" sx={{ px: 5 }} loading={loading} />
-            {/* <LoadingButton
-              loading={isSubmitting}
-              variant="contained"
-              color="primary"
-              type="submit"
-              size="large"
-            >
-              Save and Continue
-            </LoadingButton> */}
           </Stack>
         </form>
       </Box>
