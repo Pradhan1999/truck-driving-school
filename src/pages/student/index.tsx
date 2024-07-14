@@ -15,6 +15,7 @@ const Student = () => {
     <div>
       <Page
         title="Students"
+        breadcrumbs={[{ label: "Student", link: "/student" }]}
         primaryAction={
           <Stack direction="row" spacing={1}>
             <Link to="/student/add">

@@ -28,7 +28,7 @@ const student = {
   },
   updateStudent: {
     v1: {
-      ...defaults.methods.PUT,
+      ...defaults.methods.PATCH,
       ...defaults.versions.v1,
       uri: prefix + "/:id",
     },

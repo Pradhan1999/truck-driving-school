@@ -59,7 +59,7 @@ const StudentTable = ({ drawer, setDrawer }: any) => {
     {
       icon: <TbEdit size={18} />,
       value: "Edit",
-      content: () => navigate(`/student/${id}`),
+      content: () => navigate(`/student/edit/${id}`),
     },
   ];
   const columns = [

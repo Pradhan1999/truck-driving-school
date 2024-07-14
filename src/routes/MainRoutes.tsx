@@ -69,6 +69,10 @@ const MainRoutes = {
           path: "student/add",
           element: <AddStudent />,
         },
+        {
+          path: "student/edit/:id",
+          element: <AddStudent />,
+        },
       ],
     },
     {

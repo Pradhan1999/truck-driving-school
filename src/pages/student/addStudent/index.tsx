@@ -5,25 +5,32 @@ import { z } from "zod";
 import Page from "components/ui/PageLayout";
 import PersonalInformation from "./personalInformation";
 import Address from "./address";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CourseDetails from "./courseDetails";
-import { addStudent } from "services/student";
+import { addStudent, getSingleStudent, updateStudent } from "services/student";
 import ActionButton from "components/ui/ActionButton";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { enqueueSnackbar } from "notistack";
 
 const amountValidation = z
-  .string()
-  .regex(/^\d+(\.\d{1,2})?$/, "Please enter a valid amount")
-  .transform((val) => parseFloat(val))
+  .union([z.string(), z.number()])
+  .refine((val) => {
+    if (typeof val === "string") {
+      return /^\d+(\.\d{1,2})?$/.test(val);
+    }
+    return true;
+  }, "Please enter a valid amount")
+  .transform((val) => (typeof val === "string" ? parseFloat(val) : val))
   .refine((val) => val >= 0, "Amount cannot be negative")
-  .optional();
+  .optional()
+  .or(z.literal(""));
 
 const schema = z.object({
   firstName: z.string().min(1, "Please Enter First Name"),
   middleName: z.string().optional(),
   lastName: z.string().min(1, "Please Enter Last Name"),
   email: z.string().email("Invalid email address"),
-  gender: z.enum(["male", "female", "other"], {
+  gender: z.enum(["male", "female", "other", ""], {
     errorMap: () => ({ message: "Please select a gender" }),
   }),
   userName: z.string().min(1, "Please Enter Username"),
@@ -39,7 +46,6 @@ const schema = z.object({
     }),
   altContactNo: z
     .string()
-    .min(1, "Contact number is required")
     .regex(
       /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
       "Invalid contact number format"
@@ -47,7 +53,8 @@ const schema = z.object({
     .refine((value) => value.replace(/[^\d+]/g, "").length >= 10, {
       message: "Contact number must have at least 10 digits",
     })
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   licenceNo: z.string().optional(),
   sin: z.string().optional(),
   dob: z.string({
@@ -64,12 +71,11 @@ const schema = z.object({
   province: z.enum(["", "pending", "approved", "rejected"]),
   postalCode: z.string().min(1, "Postal Code is required"),
 
-  mailStreetNo: z.string().min(1, "Street Number is required").optional(),
-  mailStreetName: z.string().min(1, "Street Name is required").optional(),
-  mailCity: z.string().min(1, "City is required").optional(),
-  mailPostalCode: z.string().min(1, "Postal Code is required").optional(),
-  mailProvince: z.enum(["", "pending", "approved", "rejected"]).optional(),
-
+  mailStreetNo: z.string().optional(),
+  mailStreetName: z.string().optional(),
+  mailCity: z.string().optional(),
+  mailPostalCode: z.string().optional(),
+  mailProvince: z.string().optional(),
   // course
   campus: z.string().min(1, "Campus is required"),
   enrollDate: z.string({
@@ -83,13 +89,18 @@ const schema = z.object({
   }),
   courseName: z.string().min(1, "Course Name is required"),
   campusLoc: z.string().min(1, "Campus Location is required"),
-  internationalStudent: z.enum(["", "yes", "no"]),
+  internationalStudent: z.enum(["yes", "no"]),
   classroomSch: z.string().min(1, "Classroom Schedule is required"),
   practicalSch: z.string().min(1, "Practical Schedule is required"),
   tutionFee: z
-    .string()
-    .regex(/^\d+(\.\d{1,2})?$/, "Please enter a valid amount")
-    .transform((val) => parseFloat(val))
+    .union([z.string(), z.number()])
+    .refine((val) => {
+      if (typeof val === "string") {
+        return /^\d+(\.\d{1,2})?$/.test(val);
+      }
+      return true;
+    }, "Please enter a valid amount")
+    .transform((val) => (typeof val === "string" ? parseFloat(val) : val))
     .refine((val) => val >= 0, "Amount cannot be negative"),
   bookFee: amountValidation,
   expendableFee: amountValidation,
@@ -108,14 +119,17 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const AddStudent = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [student, setStudent] = useState<any>({});
 
   const {
     watch,
     control,
     setValue,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -126,10 +140,11 @@ const AddStudent = () => {
       mailProvince: "",
       referredBy: "",
       fundingStatus: "",
+      gender: "",
+      altContactNo: "",
+      internationalStudent: "no",
     },
   });
-
-  console.log("errors", errors);
 
   const onSubmit = (data: FormData) => {
     const { sameAddress, ...restData } = data;
@@ -140,21 +155,47 @@ const AddStudent = () => {
       internationalStudent: data?.internationalStudent === "yes" ? true : false,
     };
 
-    addStudent({
-      body,
-    })
-      .then((res: any) => {
-        console.log("res", res);
-        navigate("/student");
-        //handle response here...
+    if (params?.id) {
+      // update code
+      updateStudent({
+        pathParams: { id: params?.id },
+        body,
       })
-      .catch((error: any) => {
-        console.log("error", error);
-        //handle error here...
+        .then((res: any) => {
+          //handle response here...
+          enqueueSnackbar("Student updated successfully", {
+            variant: "success",
+          });
+        })
+        .catch((error: any) => {
+          enqueueSnackbar("Something went wrong", {
+            variant: "error",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      addStudent({
+        body,
       })
-      .finally(() => {
-        setLoading(false);
-      });
+        .then((res: any) => {
+          navigate("/student");
+          enqueueSnackbar("Student added successfully", {
+            variant: "success",
+          });
+          //handle response here...
+        })
+        .catch((error: any) => {
+          enqueueSnackbar("Something went wrong", {
+            variant: "error",
+          });
+          //handle error here...
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   const sameAddress = watch("sameAddress");
@@ -174,6 +215,7 @@ const AddStudent = () => {
     }
   }, [city, postalCode, province, sameAddress, setValue, streetName, streetNo]);
 
+  // SCROLL TO ERROR
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       const firstErrorField: any = document.querySelector(
@@ -189,8 +231,44 @@ const AddStudent = () => {
     }
   }, [errors]);
 
+  const fetchSingleStudent = useCallback(() => {
+    // setLoading(true);
+    getSingleStudent({
+      pathParams: { id: params?.id },
+    })
+      .then((res) => {
+        setStudent(res);
+        console.log("res", res);
+      })
+      .finally(() => {
+        // setLoading(false);
+      });
+  }, [params?.id]);
+
+  useEffect(() => {
+    fetchSingleStudent();
+  }, [fetchSingleStudent]);
+
+  useEffect(() => {
+    reset({
+      ...Object.fromEntries(
+        Object.entries(student || {}).map(([key, value]) => [key, value ?? ""])
+      ),
+      gender: student?.gender || "",
+      altContactNo: student?.altContactNo || "",
+      internationalStudent:
+        student?.internationalStudent === true ? "yes" : "no",
+    });
+  }, [params.id, reset, student]);
+
   return (
-    <Page title="Add Student">
+    <Page
+      title={params?.id ? "Edit Student" : "Add Student"}
+      breadcrumbs={[
+        { label: "Student", link: "/student" },
+        { label: params?.id ? "Edit" : "Add", link: "/student/add" },
+      ]}
+    >
       <Box>
         <form name="add-student-form" onSubmit={handleSubmit(onSubmit)}>
           <PersonalInformation control={control} errors={errors} />
@@ -201,7 +279,11 @@ const AddStudent = () => {
 
           {/* SUBMIT BUTTON */}
           <Stack direction="row" justifyContent="flex-end" mt={4}>
-            <ActionButton text="Add" sx={{ px: 5 }} loading={loading} />
+            <ActionButton
+              text={params?.id ? "Update" : "Add"}
+              sx={{ px: 5 }}
+              loading={loading}
+            />
           </Stack>
         </form>
       </Box>

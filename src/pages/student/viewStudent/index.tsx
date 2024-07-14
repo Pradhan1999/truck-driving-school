@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import MainCard from "components/MainCard";
+import BreadcrumbComponent from "components/ui/Breadcrumbs";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -195,297 +196,305 @@ const ViewStudent = () => {
   }
 
   return (
-    <MainCard content={false}>
-      <Stack padding={3}>
-        <Grid container spacing={1}>
-          {/* HEADER */}
-          <Grid
-            item
-            xs={12}
-            container
-            justifyContent="center"
-            alignItems="center"
-            direction="column"
-          >
-            <Avatar
-              alt="student profile"
-              src={student?.studentProfilePic}
-              sx={{
-                width: 90,
-                height: 90,
-                bgcolor: () => {
-                  return stringToColor(fullName(student?.firstName) || "");
-                },
-              }}
+    <>
+      <BreadcrumbComponent
+        breadcrumbs={[
+          { label: "Student", link: "/student" },
+          { label: "View", link: "/student/add" },
+        ]}
+      />
+      <MainCard content={false}>
+        <Stack padding={3}>
+          <Grid container spacing={1}>
+            {/* HEADER */}
+            <Grid
+              item
+              xs={12}
+              container
+              justifyContent="center"
+              alignItems="center"
+              direction="column"
             >
-              {getInitials(
-                fullName(student?.firstName, student?.lastName) || ""
-              )}
-            </Avatar>
-            <Stack textAlign="center" mt={1}>
-              <Typography variant="h4">
-                {fullName(student?.firstName, student?.lastName) || ""}
+              <Avatar
+                alt="student profile"
+                src={student?.studentProfilePic}
+                sx={{
+                  width: 90,
+                  height: 90,
+                  bgcolor: () => {
+                    return stringToColor(fullName(student?.firstName) || "");
+                  },
+                }}
+              >
+                {getInitials(
+                  fullName(student?.firstName, student?.lastName) || ""
+                )}
+              </Avatar>
+              <Stack textAlign="center" mt={1}>
+                <Typography variant="h4">
+                  {fullName(student?.firstName, student?.lastName) || ""}
+                </Typography>
+                <Typography variant="overline">Student</Typography>
+              </Stack>
+            </Grid>
+
+            {/* Personal Information */}
+            <Grid item xs={12}>
+              <Typography variant="h5" fontWeight={600}>
+                Personal Information
               </Typography>
-              <Typography variant="overline">Student</Typography>
-            </Stack>
-          </Grid>
+              <Divider sx={{ mt: 2 }} />
+            </Grid>
 
-          {/* Personal Information */}
-          <Grid item xs={12}>
-            <Typography variant="h5" fontWeight={600}>
-              Personal Information
-            </Typography>
-            <Divider sx={{ mt: 2 }} />
-          </Grid>
+            {/* DATA */}
+            <CustomField
+              title="Full Name"
+              valueSX={{ textTransform: "capitalize" }}
+              value={fullName(student?.firstName, student?.lastName) || ""}
+            />
+            <CustomField title="Email" value={student?.email} />
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <CustomField
+              title="Contact Number"
+              value={student?.contactNo || "-"}
+            />
+            <CustomField
+              title="Alternative Contact Number"
+              value={student?.altContactNo || "-"}
+            />
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <CustomField
+              title="Date of Birth"
+              value={student?.dob && moment(student?.dob).format("LL")}
+            />
+            <CustomField
+              title="Gender"
+              valueSX={{ textTransform: "capitalize" }}
+              value={student?.gender}
+            />
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <CustomField
+              title="Permanent Address"
+              value={getFullAddress(
+                student?.streetNo,
+                student?.streetName,
+                student?.city,
+                student?.postalCode
+              )}
+            />
+            <CustomField
+              title="Mailing Address"
+              value={
+                student?.mailStreetNo
+                  ? getFullAddress(
+                      student?.mailStreetNo,
+                      student?.mailStreetName,
+                      student?.mailCity,
+                      student?.mailPostalCode
+                    )
+                  : "-"
+              }
+            />
 
-          {/* DATA */}
-          <CustomField
-            title="Full Name"
-            valueSX={{ textTransform: "capitalize" }}
-            value={fullName(student?.firstName, student?.lastName) || ""}
-          />
-          <CustomField title="Email" value={student?.email} />
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <CustomField
-            title="Contact Number"
-            value={student?.contactNo || "-"}
-          />
-          <CustomField
-            title="Alternative Contact Number"
-            value={student?.altContactNo || "-"}
-          />
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <CustomField
-            title="Date of Birth"
-            value={student?.dob && moment(student?.dob).format("LL")}
-          />
-          <CustomField
-            title="Gender"
-            valueSX={{ textTransform: "capitalize" }}
-            value={student?.gender}
-          />
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <CustomField
-            title="Permanent Address"
-            value={getFullAddress(
-              student?.streetNo,
-              student?.streetName,
-              student?.city,
-              student?.postalCode
-            )}
-          />
-          <CustomField
-            title="Mailing Address"
-            value={
-              student?.mailStreetNo
-                ? getFullAddress(
-                    student?.mailStreetNo,
-                    student?.mailStreetName,
-                    student?.mailCity,
-                    student?.mailPostalCode
-                  )
-                : "-"
-            }
-          />
+            {/* Course Details */}
+            <Grid item xs={12} mt={5}>
+              <Typography variant="h5" fontWeight={600}>
+                Course Details
+              </Typography>
+              <Divider sx={{ mt: 2 }} />
+            </Grid>
 
-          {/* Course Details */}
-          <Grid item xs={12} mt={5}>
-            <Typography variant="h5" fontWeight={600}>
-              Course Details
-            </Typography>
-            <Divider sx={{ mt: 2 }} />
-          </Grid>
+            {/* DATA */}
+            <CustomField
+              title="Course Name"
+              value={student?.courseName}
+              valueSX={{ textTransform: "uppercase" }}
+            />
+            <CustomField
+              title="Enrollment Date"
+              value={
+                student?.enrollDate && moment(student?.enrollDate).format("LL")
+              }
+            />
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
 
-          {/* DATA */}
-          <CustomField
-            title="Course Name"
-            value={student?.courseName}
-            valueSX={{ textTransform: "uppercase" }}
-          />
-          <CustomField
-            title="Enrollment Date"
-            value={
-              student?.enrollDate && moment(student?.enrollDate).format("LL")
-            }
-          />
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
+            <CustomField
+              title="Commencement Date"
+              value={
+                student?.commencementDate &&
+                moment(student?.commencementDate).format("LL")
+              }
+            />
+            <CustomField
+              title="Expected Completion Date"
+              value={
+                student?.completionDate &&
+                moment(student?.completionDate).format("LL")
+              }
+            />
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
 
-          <CustomField
-            title="Commencement Date"
-            value={
-              student?.commencementDate &&
-              moment(student?.commencementDate).format("LL")
-            }
-          />
-          <CustomField
-            title="Expected Completion Date"
-            value={
-              student?.completionDate &&
-              moment(student?.completionDate).format("LL")
-            }
-          />
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
+            <CustomField
+              title="Campus"
+              value={student?.campus}
+              valueSX={{ textTransform: "uppercase" }}
+            />
+            <CustomField title="Campus Location" value={student?.campusLoc} />
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
 
-          <CustomField
-            title="Campus"
-            value={student?.campus}
-            valueSX={{ textTransform: "uppercase" }}
-          />
-          <CustomField title="Campus Location" value={student?.campusLoc} />
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
+            {/* Admission Requirements Fees */}
+            <Grid item xs={12} mt={5}>
+              <Typography variant="h5" fontWeight={600}>
+                Admission Requirements Fees
+              </Typography>
+            </Grid>
 
-          {/* Admission Requirements Fees */}
-          <Grid item xs={12} mt={5}>
-            <Typography variant="h5" fontWeight={600}>
-              Admission Requirements Fees
-            </Typography>
-          </Grid>
-
-          {/* DATA */}
-          <TableContainer component={Paper} sx={{ mt: 3 }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <caption>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="h5">Total Fee</Typography>
-                  <Typography variant="h5">
-                    {formatCurrency(calculateTotalFees(student))}
-                  </Typography>
-                </Stack>
-              </caption>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Item</TableCell>
-                  <TableCell align="right">Amount (CAN$)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {ADMISSION_REQ_FEES.map((row) => (
-                  <TableRow
-                    key={row.item}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.item}
-                    </TableCell>
-                    <TableCell align="right">{row.amount}</TableCell>
+            {/* DATA */}
+            <TableContainer component={Paper} sx={{ mt: 3 }}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <caption>
+                  <Stack direction="row" justifyContent="space-between">
+                    <Typography variant="h5">Total Fee</Typography>
+                    <Typography variant="h5">
+                      {formatCurrency(calculateTotalFees(student))}
+                    </Typography>
+                  </Stack>
+                </caption>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Item</TableCell>
+                    <TableCell align="right">Amount (CAN$)</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {ADMISSION_REQ_FEES.map((row) => (
+                    <TableRow
+                      key={row.item}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.item}
+                      </TableCell>
+                      <TableCell align="right">{row.amount}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-          {/* Title */}
-          <Grid item xs={12} mt={5}>
-            <Typography variant="h5" fontWeight={600}>
-              Fees Transactions
-            </Typography>
-          </Grid>
+            {/* Title */}
+            <Grid item xs={12} mt={5}>
+              <Typography variant="h5" fontWeight={600}>
+                Fees Transactions
+              </Typography>
+            </Grid>
 
-          {/* DATA */}
-          <TableContainer component={Paper} sx={{ my: 3 }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <caption>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="h5">Total Fee</Typography>
-                  <Typography variant="h5">$200.00</Typography>
-                </Stack>
-                {/* <Stack direction="row" justifyContent="space-between">
+            {/* DATA */}
+            <TableContainer component={Paper} sx={{ my: 3 }}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <caption>
+                  <Stack direction="row" justifyContent="space-between">
+                    <Typography variant="h5">Total Fee</Typography>
+                    <Typography variant="h5">$200.00</Typography>
+                  </Stack>
+                  {/* <Stack direction="row" justifyContent="space-between">
                   <CustomField title="First Name" value="Remy" />
                   <Divider orientation="vertical" />
                   <CustomField title="First Name" value="Remy" />
                 </Stack> */}
-              </caption>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Receipt Id</TableCell>
-                  <TableCell>Amount Paid (CAN$)</TableCell>
-                  <TableCell>Payment Mode</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.item}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.date}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.receiptId}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.paymentMode}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.amountPaid}
-                    </TableCell>
+                </caption>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Receipt Id</TableCell>
+                    <TableCell>Amount Paid (CAN$)</TableCell>
+                    <TableCell>Payment Mode</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <CustomField
-            title="Total Paid"
-            value="$100.00"
-            sx={{
-              bgcolor: theme.palette.mode === "light" ? grey[100] : "",
-              p: 1,
-            }}
-          />
-          <CustomField
-            title="Balance"
-            value="$90.00"
-            sx={{
-              bgcolor: theme.palette.mode === "light" ? grey[200] : "",
-              p: 1,
-            }}
-          />
-        </Grid>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow
+                      key={row.item}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.date}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.receiptId}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.paymentMode}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.amountPaid}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <CustomField
+              title="Total Paid"
+              value="$100.00"
+              sx={{
+                bgcolor: theme.palette.mode === "light" ? grey[100] : "",
+                p: 1,
+              }}
+            />
+            <CustomField
+              title="Balance"
+              value="$90.00"
+              sx={{
+                bgcolor: theme.palette.mode === "light" ? grey[200] : "",
+                p: 1,
+              }}
+            />
+          </Grid>
 
-        {/* Title */}
-        <Grid item xs={12} mt={3}>
-          <Typography variant="h5" fontWeight={600}>
-            Sessions
-          </Typography>
-        </Grid>
+          {/* Title */}
+          <Grid item xs={12} mt={3}>
+            <Typography variant="h5" fontWeight={600}>
+              Sessions
+            </Typography>
+          </Grid>
 
-        <Grid container spacing={2}>
-          {sessions.map((session) => (
-            <Grid item xs={12} key={session.id}>
-              <Grid
-                container
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Grid item>
-                  <Typography variant="h6">{session.title}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {session.description}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined">Join</Button>
+          <Grid container spacing={2}>
+            {sessions.map((session) => (
+              <Grid item xs={12} key={session.id}>
+                <Grid
+                  container
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Grid item>
+                    <Typography variant="h6">{session.title}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {session.description}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="outlined">Join</Button>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      </Stack>
-    </MainCard>
+            ))}
+          </Grid>
+        </Stack>
+      </MainCard>
+    </>
   );
 };
 

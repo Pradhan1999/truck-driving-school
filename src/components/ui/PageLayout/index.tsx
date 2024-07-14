@@ -2,15 +2,28 @@ import { Box, Grid, Typography } from "@mui/material";
 import Breadcrumbs from "components/@extended/Breadcrumbs";
 import { ArrowRight2 } from "iconsax-react";
 import React from "react";
+import BreadcrumbComponent from "../Breadcrumbs";
+
+interface BreadcrumbItem {
+  label: string;
+  link: string;
+}
 
 interface PageProps {
   title: string;
   subtitle?: string;
   primaryAction?: React.ReactNode;
+  breadcrumbs?: BreadcrumbItem[];
   children: React.ReactNode;
 }
 
-const Page = ({ title, subtitle, primaryAction, children }: PageProps) => {
+const Page = ({
+  title,
+  subtitle,
+  primaryAction,
+  breadcrumbs,
+  children,
+}: PageProps) => {
   return (
     <Box component="body" style={{ backgroundColor: "transparent" }}>
       <Grid
@@ -26,6 +39,7 @@ const Page = ({ title, subtitle, primaryAction, children }: PageProps) => {
           </Typography>
           {/* BREADCRUMBS */}
           {/* <Breadcrumbs icon titleBottom={false} title={false} /> */}
+          {breadcrumbs && <BreadcrumbComponent breadcrumbs={breadcrumbs} />}
         </Grid>
         {/* PRIMARY ACTION */}
         <Grid sx={{ display: "flex", gap: 1 }}>{primaryAction}</Grid>

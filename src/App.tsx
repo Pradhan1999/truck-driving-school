@@ -14,6 +14,7 @@ import { JWTProvider as AuthProvider } from "contexts/JWTContext";
 import { RoleProvider } from "contexts/rolePermission";
 
 import Customization from "components/Customization";
+import Notistack from "components/third-party/Notistack";
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
@@ -26,9 +27,11 @@ export default function App() {
           <AuthProvider>
             <RoleProvider>
               <>
-                <RouterProvider router={router} />
-                <Customization />
-                <Snackbar />
+                <Notistack>
+                  <RouterProvider router={router} />
+                  <Customization />
+                  <Snackbar />
+                </Notistack>
               </>
             </RoleProvider>
           </AuthProvider>

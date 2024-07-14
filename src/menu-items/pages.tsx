@@ -34,8 +34,8 @@ const pages: NavItemType = {
       icon: icons.student,
       children: [
         {
-          id: "Add",
-          title: <FormattedMessage id="Add" />,
+          id: "Add Student",
+          title: <FormattedMessage id="Add Student" />,
           type: "item",
           url: "/student/add",
           target: true,

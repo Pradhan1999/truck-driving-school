@@ -100,7 +100,6 @@ const AddInstructor = () => {
       },
     })
       .then((res: any) => {
-        console.log("res", res);
         navigate("/instructor");
         enqueueSnackbar("Instructor added successfully", {
           variant: "success",
@@ -108,7 +107,9 @@ const AddInstructor = () => {
         //handle response here...
       })
       .catch((error: any) => {
-        console.log("error", error);
+        enqueueSnackbar("Something went wrong", {
+          variant: "error",
+        });
         //handle error here...
       });
   };
