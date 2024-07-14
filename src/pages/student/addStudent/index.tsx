@@ -62,7 +62,7 @@ const schema = z.object({
   }),
   language: z.enum(["english", "hindi"]),
   referredBy: z.enum(["", "pending", "approved", "rejected"]),
-  fundingStatus: z.enum(["", "pending", "approved", "rejected"]),
+  fundingStatus: z.enum(["pending", "approved", "rejected"]),
   // address
   sameAddress: z.any().optional(),
   streetNo: z.string().min(1, "Street Number is required"),
@@ -139,7 +139,7 @@ const AddStudent = () => {
       language: "english",
       mailProvince: "",
       referredBy: "",
-      fundingStatus: "",
+      fundingStatus: "pending",
       gender: "",
       altContactNo: "",
       internationalStudent: "no",
